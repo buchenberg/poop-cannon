@@ -1,4 +1,4 @@
-# [![Poop Cannon](https://github.com/buchenberg/poop-cannon/)
+# [Poop Cannon](https://github.com/buchenberg/poop-cannon/)
 
 [![github actions ci][ci.svg]][ci.link]
 [![jsdelivr][jsdelivr.svg]][jsdelivr.link]
