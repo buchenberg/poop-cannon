@@ -177,7 +177,7 @@
     ticks: 200,
     x: 0.5,
     y: 0.5,
-    shapes: ['square', 'circle'],
+    shapes: ['poo'],
     zIndex: 100,
     colors: [
       '#26ccff',
@@ -190,7 +190,7 @@
     ],
     // probably should be true, but back-compat
     disableForReducedMotion: false,
-    scalar: 1
+    scalar: 100
   };
 
   function convert(val, transform) {
@@ -270,15 +270,6 @@
     return canvas;
   }
 
-  function ellipse(context, x, y, radiusX, radiusY, rotation, startAngle, endAngle, antiClockwise) {
-    context.save();
-    context.translate(x, y);
-    context.rotate(rotation);
-    context.scale(radiusX, radiusY);
-    context.arc(0, 0, 1, startAngle, endAngle, antiClockwise);
-    context.restore();
-  }
-
   function randomPhysics(opts) {
     var radAngle = opts.angle * (Math.PI / 180);
     var radSpread = opts.spread * (Math.PI / 180);
@@ -329,38 +320,14 @@
 
     context.fillStyle = 'rgba(' + fetti.color.r + ', ' + fetti.color.g + ', ' + fetti.color.b + ', ' + (1 - progress) + ')';
     context.beginPath();
-
-    if (fetti.shape === 'circle') {
-      context.ellipse ?
-        context.ellipse(fetti.x, fetti.y, Math.abs(x2 - x1) * fetti.ovalScalar, Math.abs(y2 - y1) * fetti.ovalScalar, Math.PI / 10 * fetti.wobble, 0, 2 * Math.PI) :
-        ellipse(context, fetti.x, fetti.y, Math.abs(x2 - x1) * fetti.ovalScalar, Math.abs(y2 - y1) * fetti.ovalScalar, Math.PI / 10 * fetti.wobble, 0, 2 * Math.PI);
-    } else if (fetti.shape === 'star') {
-      var rot = Math.PI / 2 * 3;
-      var innerRadius = 4 * fetti.scalar;
-      var outerRadius = 8 * fetti.scalar;
-      var x = fetti.x;
-      var y = fetti.y;
-      var spikes = 5;
-      var step = Math.PI / spikes;
-
-      while (spikes--) {
-        x = fetti.x + Math.cos(rot) * outerRadius;
-        y = fetti.y + Math.sin(rot) * outerRadius;
-        context.lineTo(x, y);
-        rot += step;
-
-        x = fetti.x + Math.cos(rot) * innerRadius;
-        y = fetti.y + Math.sin(rot) * innerRadius;
-        context.lineTo(x, y);
-        rot += step;
-      }
-    } else {
-      context.moveTo(Math.floor(fetti.x), Math.floor(fetti.y));
-      context.lineTo(Math.floor(fetti.wobbleX), Math.floor(y1));
-      context.lineTo(Math.floor(x2), Math.floor(y2));
-      context.lineTo(Math.floor(x1), Math.floor(fetti.wobbleY));
-    }
-
+    // The size of the emoji is set with the font
+    context.font = '24px serif'
+    // use these alignment properties for "better" positioning
+    //context.textAlign = "center";
+    //context.textBaseline = "middle";
+    //var canvas = context.canvas;
+    // draw the emoji
+    context.fillText('💩', fetti.x, fetti.y, Math.abs(x2 - x1) * fetti.ovalScalar, Math.abs(y2 - y1) * fetti.ovalScalar, Math.PI / 10 * fetti.wobble, 0, 2 * Math.PI)
     context.closePath();
     context.fill();
 

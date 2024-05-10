@@ -344,7 +344,7 @@
     </a>
   </header>
 
-  <h1>Canvas Confetti</h1>
+  <h1>Poop cannon 0.1 beta</h1>
 
   <div class="container">
     <div class="group" data-name="cannon">
@@ -647,13 +647,13 @@
         fire(0.35, {
           spread: 100,
           decay: 0.91,
-          scalar: 0.8
+          scalar: 10
         });
         fire(0.1, {
           spread: 120,
           startVelocity: 25,
           decay: 0.92,
-          scalar: 1.2
+          scalar: 10
         });
         fire(0.1, {
           spread: 120,
@@ -706,7 +706,7 @@
               y: (Math.random() * skew) - 0.2
             },
             colors: ['#ffffff'],
-            shapes: ['circle'],
+            shapes: ['poo'],
             gravity: randomInRange(0.4, 0.6),
             scalar: randomInRange(0.4, 1),
             drift: randomInRange(-0.4, 0.4)
@@ -724,7 +724,7 @@
           gravity: 0,
           decay: 0.94,
           startVelocity: 30,
-          shapes: ['star'],
+          shapes: ['poo'],
           colors: ['FFE400', 'FFBD00', 'E89400', 'FFCA6C', 'FDFFB8']
         };
 
@@ -732,15 +732,8 @@
           confetti({
             ...defaults,
             particleCount: 40,
-            scalar: 1.2,
-            shapes: ['star']
-          });
-
-          confetti({
-            ...defaults,
-            particleCount: 10,
-            scalar: 0.75,
-            shapes: ['circle']
+            scalar: 100,
+            shapes: ['poo']
           });
         }
 
