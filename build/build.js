@@ -32,7 +32,7 @@ function buildCommonJs(content) {
 ${content}
 // end source content
 
-  window.confetti = module.exports;
+  window.poop = module.exports;
 }(window, {}));
 `;
 }
@@ -54,8 +54,8 @@ mkdir('dist')
 .then(() => readFile(main))
 .then(file => {
   return Promise.all([
-    writeFile('dist/confetti.browser.js', buildCommonJs(file)),
-    writeFile('dist/confetti.module.mjs', buildModule(file))
+    writeFile('dist/poop.browser.js', buildCommonJs(file)),
+    writeFile('dist/poop.module.mjs', buildModule(file))
   ]);
 })
 .catch(err => {

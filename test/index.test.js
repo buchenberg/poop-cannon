@@ -19,7 +19,7 @@ const args = process.env.CI ? [
   '--no-sandbox', '--disable-setuid-sandbox'
 ] : [];
 const headless = process.env.CI ? true :
-  process.env['CONFETTI_SHOW'] ? false : true;
+  process.env['POOP_SHOW'] ? false : true;
 
 const mkdir = async (dir) => {
   return promisify(fs.mkdir)(dir)
@@ -103,14 +103,14 @@ const createBuffer = (data, format) => {
   }
 };
 
-function confetti(opts, wait = false, funcName = 'confetti') {
+function poop(opts, wait = false, funcName = 'poop') {
   return `
 ${wait ? '' : `${funcName}.Promise = null;`}
 ${funcName}(${opts ? JSON.stringify(opts) : ''});
 `;
 }
 
-async function confettiImage(page, opts = {}, funcName = 'confetti') {
+async function poopImage(page, opts = {}, funcName = 'poop') {
   const base64png = await page.evaluate(`
   ${funcName}(${JSON.stringify(opts)});
   new Promise(function (resolve, reject) {
@@ -250,7 +250,7 @@ test.afterEach.always(async t => {
     await t.context.page.close();
   }
 
-  if (t.context.passing && !process.env['CONFETTI_SHOW']) {
+  if (t.context.passing && !process.env['POOP_SHOW']) {
     return;
   }
 
@@ -274,10 +274,10 @@ test.afterEach.always(async t => {
  * Image-based tests
  */
 
-test('shoots default confetti', async t => {
+test('shoots default poop', async t => {
   const page = t.context.page = await fixturePage();
 
-  t.context.buffer = await confettiImage(page);
+  t.context.buffer = await poopImage(page);
   t.context.image = await reduceImg(t.context.buffer);
 
   const pixels = await uniqueColors(t.context.image);
@@ -286,10 +286,10 @@ test('shoots default confetti', async t => {
   t.true(pixels.length <= 8);
 });
 
-test('shoots red confetti', async t => {
+test('shoots red poop', async t => {
   const page = t.context.page = await fixturePage();
 
-  t.context.buffer = await confettiImage(page, {
+  t.context.buffer = await poopImage(page, {
     colors: ['#ff0000']
   });
   t.context.image = await reduceImg(t.context.buffer);
@@ -299,10 +299,10 @@ test('shoots red confetti', async t => {
   t.deepEqual(pixels, ['#ff0000', '#ffffff']);
 });
 
-test('shoots blue confetti', async t => {
+test('shoots blue poop', async t => {
   const page = t.context.page = await fixturePage();
 
-  t.context.buffer = await confettiImage(page, {
+  t.context.buffer = await poopImage(page, {
     colors: ['#0000ff']
   });
   t.context.image = await reduceImg(t.context.buffer);
@@ -312,10 +312,10 @@ test('shoots blue confetti', async t => {
   t.deepEqual(pixels, ['#0000ff', '#ffffff']);
 });
 
-test('shoots circle confetti', async t => {
+test('shoots circle poop', async t => {
   const page = t.context.page = await fixturePage();
 
-  t.context.buffer = await confettiImage(page, {
+  t.context.buffer = await poopImage(page, {
     colors: ['#0000ff'],
     shapes: ['circle']
   });
@@ -326,10 +326,10 @@ test('shoots circle confetti', async t => {
   t.deepEqual(pixels, ['#0000ff', '#ffffff']);
 });
 
-test('shoots star confetti', async t => {
+test('shoots star poop', async t => {
   const page = t.context.page = await fixturePage();
 
-  t.context.buffer = await confettiImage(page, {
+  t.context.buffer = await poopImage(page, {
     colors: ['#0000ff'],
     shapes: ['star']
   });
@@ -340,10 +340,10 @@ test('shoots star confetti', async t => {
   t.deepEqual(pixels, ['#0000ff', '#ffffff']);
 });
 
-test('shoots default scaled confetti', async t => {
+test('shoots default scaled poop', async t => {
   const page = t.context.page = await fixturePage();
 
-  t.context.buffer = await confettiImage(page, {
+  t.context.buffer = await poopImage(page, {
     colors: ['#0000ff'],
     shapes: ['circle'],
     particleCount: 10
@@ -355,10 +355,10 @@ test('shoots default scaled confetti', async t => {
   t.is(pixels > 100 && pixels < 500, true);
 });
 
-test('shoots larger scaled confetti', async t => {
+test('shoots larger scaled poop', async t => {
   const page = t.context.page = await fixturePage();
 
-  t.context.buffer = await confettiImage(page, {
+  t.context.buffer = await poopImage(page, {
     colors: ['#0000ff'],
     shapes: ['circle'],
     scalar: 10,
@@ -371,10 +371,10 @@ test('shoots larger scaled confetti', async t => {
   t.is(pixels > 2000, true);
 });
 
-test('shoots confetti to the left', async t => {
+test('shoots poop to the left', async t => {
   const page = t.context.page = await fixturePage();
 
-  t.context.buffer = await confettiImage(page, {
+  t.context.buffer = await poopImage(page, {
     colors: ['#0000ff'],
     particleCount: 100,
     angle: 180,
@@ -390,10 +390,10 @@ test('shoots confetti to the left', async t => {
   t.deepEqual(pixels.right, ['#ffffff']);
 });
 
-test('shoots confetti to the right', async t => {
+test('shoots poop to the right', async t => {
   const page = t.context.page = await fixturePage();
 
-  t.context.buffer = await confettiImage(page, {
+  t.context.buffer = await poopImage(page, {
     colors: ['#0000ff'],
     particleCount: 100,
     angle: 0,
@@ -413,7 +413,7 @@ test('shoots confetti to the right', async t => {
  * Operational tests
  */
 
-test('shoots confetti repeatedly using requestAnimationFrame', async t => {
+test('shoots poop repeatedly using requestAnimationFrame', async t => {
   const page = t.context.page = await fixturePage();
   const time = 6 * 1000;
 
@@ -423,7 +423,7 @@ test('shoots confetti repeatedly using requestAnimationFrame', async t => {
     count: 1
   };
 
-  // continuously animate more and more confetti
+  // continuously animate more and more poop
   // for 10 seconds... that should be longer than
   // this test... we won't wait for it anyway
   page.evaluate(`
@@ -431,7 +431,7 @@ test('shoots confetti repeatedly using requestAnimationFrame', async t => {
     var end = Date.now() + (${time});
 
     (function frame() {
-      confetti(opts);
+      poop(opts);
 
       if (Date.now() < end) {
         requestAnimationFrame(frame);
@@ -472,14 +472,14 @@ test('shoots confetti repeatedly using requestAnimationFrame', async t => {
 test('uses promises when available', async t => {
   const page = t.context.page = await fixturePage();
 
-  await page.evaluate(confetti({}, true));
+  await page.evaluate(poop({}, true));
 
   t.context.buffer = await page.screenshot({ type: 'png' });
   t.context.image = await reduceImg(t.context.buffer);
 
   const pixels = await uniqueColors(t.context.image);
 
-  // make sure that all confetti have disappeared
+  // make sure that all poop have disappeared
   t.deepEqual(pixels, ['#ffffff']);
 });
 
@@ -490,17 +490,17 @@ test('removes the canvas when done', async t => {
     return page.evaluate(`!!document.querySelector('canvas')`);
   }
 
-  // make sure there is no canvas before executing confetti
+  // make sure there is no canvas before executing poop
   t.is(await hasCanvas(), false);
 
-  const promise = page.evaluate(confetti({}, true));
+  const promise = page.evaluate(poop({}, true));
 
-  // confetti is running, make sure a canvas exists
+  // poop is running, make sure a canvas exists
   t.is(await hasCanvas(), true);
 
   await promise;
 
-  // confetti is done, canvas should be gone now
+  // poop is done, canvas should be gone now
   t.is(await hasCanvas(), false);
 });
 
@@ -518,21 +518,21 @@ test('handles window resizes', async t => {
     particleCount: 2
   };
 
-  // continuously animate more and more confetti
+  // continuously animate more and more poop
   // for 10 seconds... that should be longer than
   // this test... we won't wait for it anyway
   page.evaluate(`
     var opts = ${JSON.stringify(opts)};
     var end = Date.now() + (10 * 1000);
 
-    var promise = confetti(opts);
+    var promise = poop(opts);
 
     var interval = setInterval(function() {
         if (Date.now() > end) {
             return clearInterval(interval);
         }
 
-        confetti(opts);
+        poop(opts);
     }, ${time});
   `);
 
@@ -549,7 +549,7 @@ test('handles window resizes', async t => {
   let second = t.context.image.clone().crop(widthThird * 1, 0, widthThird, height);
   let third = t.context.image.clone().crop(widthThird * 2, 0, widthThird, height);
 
-  // the first will be white, the second and third will have confetti in them
+  // the first will be white, the second and third will have poop in them
   t.deepEqual(await uniqueColors(first), ['#ffffff']);
   t.deepEqual(await uniqueColors(second), ['#0000ff', '#ffffff']);
   t.deepEqual(await uniqueColors(third), ['#0000ff', '#ffffff']);
@@ -561,11 +561,11 @@ test('stops and removes canvas immediately when `reset` is called', async t => {
   const promise = page.evaluate(`new Promise((resolve, reject) => {
     const results = [];
     results.push(!!document.querySelector('canvas'));
-    confetti().then(() => {
+    poop().then(() => {
       results.push('done');
     });
     results.push(!!document.querySelector('canvas'));
-    confetti.reset();
+    poop.reset();
     results.push(!!document.querySelector('canvas'));
     resolve(results);
   })`);
@@ -579,7 +579,7 @@ test('stops and removes canvas immediately when `reset` is called', async t => {
  * Custom canvas
  */
 
-const injectCanvas = async (page, opts = {}, createName = 'confetti.create') => {
+const injectCanvas = async (page, opts = {}, createName = 'poop.create') => {
   const allowResize = 'allowResize' in opts ? opts.allowResize : true;
   const useWorker = 'useWorker' in opts ? opts.useWorker : false;
 
@@ -605,13 +605,13 @@ const getCanvasSize = async (page) => {
   `);
 };
 
-test('can create instances of confetti in separate canvas', async t => {
+test('can create instances of poop in separate canvas', async t => {
   const page = t.context.page = await fixturePage();
   await injectCanvas(page);
 
   const beforeSize = await getCanvasSize(page);
 
-  t.context.buffer = await confettiImage(page, {
+  t.context.buffer = await poopImage(page, {
     colors: ['#ff0000']
   }, 'myConfetti');
   t.context.image = await reduceImg(t.context.buffer);
@@ -628,7 +628,7 @@ test('can use a custom canvas without resizing', async t => {
 
   const beforeSize = await getCanvasSize(page);
 
-  t.context.buffer = await confettiImage(page, {
+  t.context.buffer = await poopImage(page, {
     colors: ['#ff0000'],
     startVelocity: 2,
     spread: 360,
@@ -642,7 +642,7 @@ test('can use a custom canvas without resizing', async t => {
   t.deepEqual(beforeSize, afterSize);
 });
 
-const resizeTest = async (t, createOpts, createName = 'confetti.create') => {
+const resizeTest = async (t, createOpts, createName = 'poop.create') => {
   const time = 50;
 
   const page = t.context.page = await fixturePage();
@@ -656,7 +656,7 @@ const resizeTest = async (t, createOpts, createName = 'confetti.create') => {
     particleCount: 2
   };
 
-  // continuously animate more and more confetti
+  // continuously animate more and more poop
   // for 10 seconds... that should be longer than
   // this test... we won't wait for it anyway
   page.evaluate(`
@@ -695,7 +695,7 @@ const resizeTest = async (t, createOpts, createName = 'confetti.create') => {
   let second = t.context.image.clone().crop(widthThird * 1, 0, widthThird, height);
   let third = t.context.image.clone().crop(widthThird * 2, 0, widthThird, height);
 
-  // the first will be white, the second and third will have confetti in them
+  // the first will be white, the second and third will have poop in them
   t.deepEqual(await uniqueColors(first), ['#ffffff']);
   t.deepEqual(await uniqueColors(second), ['#0000ff', '#ffffff']);
   t.deepEqual(await uniqueColors(third), ['#0000ff', '#ffffff']);
@@ -723,7 +723,7 @@ test('can use a custom canvas with workers and resize it', async t => {
 
   const beforeSize = await getCanvasSize(page);
 
-  t.context.buffer = await confettiImage(page, {
+  t.context.buffer = await poopImage(page, {
     colors: ['#ff0000']
   }, 'myConfetti');
   t.context.image = await reduceImg(t.context.buffer);
@@ -734,7 +734,7 @@ test('can use a custom canvas with workers and resize it', async t => {
   t.notDeepEqual(beforeSize, afterSize);
 });
 
-test('shoots confetti repeatedly in defaut and custom canvas using requestAnimationFrame', async t => {
+test('shoots poop repeatedly in defaut and custom canvas using requestAnimationFrame', async t => {
   const page = t.context.page = await fixturePage();
   await injectCanvas(page);
   const time = 6 * 1000;
@@ -752,7 +752,7 @@ test('shoots confetti repeatedly in defaut and custom canvas using requestAnimat
     spread: 10
   };
 
-  // continuously animate more and more confetti
+  // continuously animate more and more poop
   // for 10 seconds... that should be longer than
   // this test... we won't wait for it anyway
   page.evaluate(`
@@ -761,7 +761,7 @@ test('shoots confetti repeatedly in defaut and custom canvas using requestAnimat
     var end = Date.now() + (${time});
 
     (function frame() {
-      confetti(regular);
+      poop(regular);
       myConfetti(custom);
 
       if (Date.now() < end) {
@@ -813,10 +813,10 @@ test('can initialize the same canvas multiple times when using a worker', async 
 
   await page.evaluate(`
     var canvas = document.querySelector('#testcanvas');
-    var instance1 = confetti.create(canvas, { resize: true, useWorker: true });
+    var instance1 = poop.create(canvas, { resize: true, useWorker: true });
   `);
 
-  t.context.buffer = await confettiImage(page, {
+  t.context.buffer = await poopImage(page, {
     colors: ['#ff0000'],
     startVelocity: 2,
     spread: 360,
@@ -827,10 +827,10 @@ test('can initialize the same canvas multiple times when using a worker', async 
 
   await page.evaluate(`
     var canvas = document.querySelector('#testcanvas');
-    var instance2 = confetti.create(canvas, { resize: true, useWorker: true });
+    var instance2 = poop.create(canvas, { resize: true, useWorker: true });
   `);
 
-  t.context.buffer = await confettiImage(page, {
+  t.context.buffer = await poopImage(page, {
     colors: ['#ff00ff'],
     startVelocity: 2,
     spread: 360,
@@ -854,10 +854,10 @@ test('can initialize the same canvas multiple times without using a worker', asy
 
   await page.evaluate(`
     var canvas = document.querySelector('#testcanvas');
-    var instance1 = confetti.create(canvas, { resize: true, useWorker: false });
+    var instance1 = poop.create(canvas, { resize: true, useWorker: false });
   `);
 
-  t.context.buffer = await confettiImage(page, {
+  t.context.buffer = await poopImage(page, {
     colors: ['#ff0000'],
     startVelocity: 2,
     spread: 360,
@@ -868,10 +868,10 @@ test('can initialize the same canvas multiple times without using a worker', asy
 
   await page.evaluate(`
     var canvas = document.querySelector('#testcanvas');
-    var instance2 = confetti.create(canvas, { resize: true, useWorker: false });
+    var instance2 = poop.create(canvas, { resize: true, useWorker: false });
   `);
 
-  t.context.buffer = await confettiImage(page, {
+  t.context.buffer = await poopImage(page, {
     colors: ['#ff00ff'],
     startVelocity: 2,
     spread: 360,
@@ -883,11 +883,11 @@ test('can initialize the same canvas multiple times without using a worker', asy
   t.deepEqual(await uniqueColors(t.context.image), ['#ff00ff', '#ffffff']);
 });
 
-test('calling `reset` method clears all existing confetti but more can be launched after', async t => {
+test('calling `reset` method clears all existing poop but more can be launched after', async t => {
   const page = t.context.page = await fixturePage();
   await injectCanvas(page);
 
-  const prom1 = page.evaluate(confetti({ colors: ['#ff0000'] }, true, 'myConfetti'));
+  const prom1 = page.evaluate(poop({ colors: ['#ff0000'] }, true, 'myConfetti'));
   await sleep(50);
   const img1 = await page.screenshot({ type: 'png' });
 
@@ -897,7 +897,7 @@ test('calling `reset` method clears all existing confetti but more can be launch
   ]);
   const img2 = await page.screenshot({ type: 'png' });
 
-  const prom2 = page.evaluate(confetti({ colors: ['#ff0000'] }, true, 'myConfetti'));
+  const prom2 = page.evaluate(poop({ colors: ['#ff0000'] }, true, 'myConfetti'));
   await sleep(50);
   const img3 = await page.screenshot({ type: 'png' });
 
@@ -915,7 +915,7 @@ test('calling `reset` method clears all existing confetti but more can be launch
 test('works using the browserify bundle', async t => {
   const page = t.context.page = await fixturePage('fixtures/page.browserify.html');
 
-  await page.evaluate(`void confetti({
+  await page.evaluate(`void poop({
     colors: ['#00ff00'],
     particleCount: 200,
     spread: 270
@@ -939,7 +939,7 @@ test('works using the browserify bundle', async t => {
 test('works using the terser minified and compressed code', async t => {
   const page = t.context.page = await fixturePage('fixtures/page.minified.html');
 
-  await page.evaluate(`void confetti({
+  await page.evaluate(`void poop({
     colors: ['#ff00ff'],
     particleCount: 200,
     spread: 270
@@ -959,12 +959,12 @@ test('works using the terser minified and compressed code', async t => {
  * ESM tests
  */
 
-test('the esm module exposed confetti as the default', async t => {
+test('the esm module exposed poop as the default', async t => {
   const page = t.context.page = await fixturePage('fixtures/page.module.html');
 
-  t.context.buffer = await confettiImage(page, {
+  t.context.buffer = await poopImage(page, {
     colors: ['#ff00ff']
-  }, 'confettiAlias');
+  }, 'poopAlias');
 
   t.context.buffer = await page.screenshot({ type: 'png' });
   t.context.image = await reduceImg(t.context.buffer);
@@ -974,12 +974,12 @@ test('the esm module exposed confetti as the default', async t => {
   t.deepEqual(pixels, ['#ff00ff', '#ffffff']);
 });
 
-test('the esm module exposed confetti.create as create', async t => {
+test('the esm module exposed poop.create as create', async t => {
   const page = t.context.page = await fixturePage('fixtures/page.module.html');
 
   await injectCanvas(page, { allowResize: true }, 'createAlias');
 
-  t.context.buffer = await confettiImage(page, {
+  t.context.buffer = await poopImage(page, {
     colors: ['#ff00ff']
   }, 'myConfetti');
   t.context.image = await reduceImg(t.context.buffer);
@@ -989,8 +989,8 @@ test('the esm module exposed confetti.create as create', async t => {
   t.deepEqual(pixels, ['#ff00ff', '#ffffff']);
 });
 
-test('exposed confetti method has a `reset` property', async t => {
+test('exposed poop method has a `reset` property', async t => {
   const page = t.context.page = await fixturePage('fixtures/page.module.html');
 
-  t.is(await page.evaluate(`typeof confettiAlias.reset`), 'function');
+  t.is(await page.evaluate(`typeof poopAlias.reset`), 'function');
 });

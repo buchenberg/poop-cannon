@@ -129,24 +129,24 @@
 
       if (!isWorker && canUseWorker) {
         var code = [
-          'var CONFETTI, SIZE = {}, module = {};',
+          'var POOP, SIZE = {}, module = {};',
           '(' + main.toString() + ')(this, module, true, SIZE);',
           'onmessage = function(msg) {',
           '  if (msg.data.options) {',
-          '    CONFETTI(msg.data.options).then(function () {',
+          '    POOP(msg.data.options).then(function () {',
           '      if (msg.data.callback) {',
           '        postMessage({ callback: msg.data.callback });',
           '      }',
           '    });',
           '  } else if (msg.data.reset) {',
-          '    CONFETTI && CONFETTI.reset();',
+          '    POOP && POOP.reset();',
           '  } else if (msg.data.resize) {',
           '    SIZE.width = msg.data.resize.width;',
           '    SIZE.height = msg.data.resize.height;',
           '  } else if (msg.data.canvas) {',
           '    SIZE.width = msg.data.canvas.width;',
           '    SIZE.height = msg.data.canvas.height;',
-          '    CONFETTI = module.exports.create(msg.data.canvas);',
+          '    POOP = module.exports.create(msg.data.canvas);',
           '  }',
           '}',
         ].join('\n');
@@ -399,14 +399,14 @@
     };
   }
 
-  function confettiCannon(canvas, globalOpts) {
+  function poopCannon(canvas, globalOpts) {
     var isLibCanvas = !canvas;
     var allowResize = !!prop(globalOpts || {}, 'resize');
     var globalDisableForReducedMotion = prop(globalOpts, 'disableForReducedMotion', Boolean);
     var shouldUseWorker = canUseWorker && !!prop(globalOpts || {}, 'useWorker');
     var worker = shouldUseWorker ? getWorker() : null;
     var resizer = isLibCanvas ? setCanvasWindowSize : setCanvasRectSize;
-    var initialized = (canvas && worker) ? !!canvas.__confetti_initialized : false;
+    var initialized = (canvas && worker) ? !!canvas.__poop_initialized : false;
     var preferLessMotion = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion)').matches;
     var animationObj;
 
@@ -496,7 +496,7 @@
       initialized = true;
 
       if (worker) {
-        canvas.__confetti_initialized = true;
+        canvas.__poop_initialized = true;
       }
 
       function onResize() {
@@ -568,7 +568,7 @@
   var defaultFire;
   function getDefaultFire() {
     if (!defaultFire) {
-      defaultFire = confettiCannon(null, { useWorker: true, resize: true });
+      defaultFire = poopCannon(null, { useWorker: true, resize: true });
     }
     return defaultFire;
   }
@@ -579,7 +579,7 @@
   module.exports.reset = function() {
     getDefaultFire().reset();
   };
-  module.exports.create = confettiCannon;
+  module.exports.create = poopCannon;
 }((function () {
   if (typeof window !== 'undefined') {
     return window;

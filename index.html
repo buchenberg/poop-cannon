@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Component for drawing poo on a canvas">
   <meta name="author" content="Kiril Vatev">
-  <meta name="keywords" content="canvas,poo,component,module,animation,javascript,catdad">
+  <meta name="keywords" content="canvas,poo,component,module,animation,javascript,buchenberg">
 
   <meta name="theme-color" content="#393939">
 
@@ -302,11 +302,11 @@
     // define a global `module` so that the actual source file can use it
     window.module = {};
   </script>
-  <script src="src/confetti.js"></script>
+  <script src="src/poop.js"></script>
   <script>
-    // define the `module.exports` as the `confetti` global, the way that the
+    // define the `module.exports` as the `poop` global, the way that the
     // cdn distributed file would
-    window.confetti = module.exports;
+    window.poop = module.exports;
   </script>
 
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.0/ace.js"></script>
@@ -339,7 +339,7 @@
 
   <header>
     <button id="themeToggle" title="Switch Theme" class="theme"></button>
-    <a class="github-icon" title="Visit on GitHub" href="https://github.com/catdad/canvas-confetti" aria-label="View source on Github">
+    <a class="github-icon" title="Visit on GitHub" href="https://github.com/buchenberg/poop-cannon" aria-label="View source on Github">
       <svg class="icon"><use xlink:href="#octo"></use></svg>
     </a>
   </header>
@@ -539,7 +539,7 @@
   </div>
 
   <footer>
-    <a href="https://github.com/catdad">
+    <a href="https://github.com/buchenberg">
       <span class="icon">
         <svg class="icon"><use xlink:href="#code"></use></svg>
       </span>
@@ -547,14 +547,14 @@
       <span class="icon">
         <svg class="icon"><use xlink:href="#heart"></use></svg>
       </span>
-      <span> by <b>catdad</b></span>
+      <span> by <b>buchenberg</b></span>
     </a>
   </footer>
 
   <script>
     var editors = [];
     var activeTheme = 'dark';
-    var currentStep = parseInt(localStorage.getItem('canvas-confetti/theme'), 10) || 0;
+    var currentStep = parseInt(localStorage.getItem('poop-cannon/theme'), 10) || 0;
     var prefersLightTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)');
     var themes = {
       light: 'ace/theme/xcode',
@@ -596,7 +596,7 @@
           break;
       }
 
-      localStorage.setItem('canvas-confetti/theme', currentStep);
+      localStorage.setItem('poop-cannon/theme', currentStep);
     }
 
     updateTheme(currentStep);
@@ -607,7 +607,7 @@
 
     var modes = {
       cannon: function cannon() {
-        confetti({
+        poop({
           particleCount: 100,
           spread: 70,
           origin: { y: 0.6 }
@@ -618,7 +618,7 @@
           return Math.random() * (max - min) + min;
         }
 
-        confetti({
+        poop({
           angle: randomInRange(55, 125),
           spread: randomInRange(50, 70),
           particleCount: randomInRange(50, 100),
@@ -632,7 +632,7 @@
         };
 
         function fire(particleRatio, opts) {
-          confetti(Object.assign({}, defaults, opts, {
+          poop(Object.assign({}, defaults, opts, {
             particleCount: Math.floor(count * particleRatio)
           }));
         }
@@ -678,8 +678,8 @@
 
           var particleCount = 50 * (timeLeft / duration);
           // since particles fall down, start a bit higher than random
-          confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-          confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+          poop(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+          poop(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
         }, 250);
       },
       snow: function snow() {
@@ -696,7 +696,7 @@
           var ticks = Math.max(200, 500 * (timeLeft / duration));
           skew = Math.max(0.8, skew - 0.001);
 
-          confetti({
+          poop({
             particleCount: 1,
             startVelocity: 0,
             ticks: ticks,
@@ -729,7 +729,7 @@
         };
 
         function shoot() {
-          confetti({
+          poop({
             ...defaults,
             particleCount: 40,
             scalar: 100,
@@ -748,14 +748,14 @@
         var colors = ['#bb0000', '#ffffff'];
 
         (function frame() {
-          confetti({
+          poop({
             particleCount: 2,
             angle: 60,
             spread: 55,
             origin: { x: 0 },
             colors: colors
           });
-          confetti({
+          poop({
             particleCount: 2,
             angle: 120,
             spread: 55,
@@ -773,9 +773,9 @@
 
         // you should  only initialize a canvas once, so save this function
         // we'll save it to the canvas itself for the purpose of this demo
-        canvas.confetti = canvas.confetti || confetti.create(canvas, { resize: true });
+        canvas.poop = canvas.poop || poop.create(canvas, { resize: true });
 
-        canvas.confetti({
+        canvas.poop({
           spread: 70,
           origin: { y: 1.2 }
         });
