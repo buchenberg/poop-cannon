@@ -1,4 +1,4 @@
-# [![Canvas Confetti](https://cdn.jsdelivr.net/gh/buchenberg-experiments/buchenberg-experiments-org@5ed78b/poop-cannon/logo.jpg)](https://github.com/buchenberg/poop-cannon/)
+# [![Poop Cannon](https://github.com/buchenberg/poop-cannon/)
 
 [![github actions ci][ci.svg]][ci.link]
 [![jsdelivr][jsdelivr.svg]][jsdelivr.link]
