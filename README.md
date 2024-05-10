@@ -95,11 +95,11 @@ _**Important: If you use `useWorker: true`, I own your canvas now. It's mine now
 var myCanvas = document.createElement('canvas');
 document.body.appendChild(myCanvas);
 
-var myConfetti = poop.create(myCanvas, {
+var myPoop = poop.create(myCanvas, {
   resize: true,
   useWorker: true
 });
-myConfetti({
+myPoop({
   particleCount: 100,
   spread: 160
   // any other options from the global
@@ -123,12 +123,12 @@ setTimeout(() => {
 var myCanvas = document.createElement('canvas');
 document.body.appendChild(myCanvas);
 
-var myConfetti = poop.create(myCanvas, { resize: true });
+var myPoop = poop.create(myCanvas, { resize: true });
 
-myConfetti();
+myPoop();
 
 setTimeout(() => {
-  myConfetti.reset();
+  myPoop.reset();
 }, 100);
 ```
 

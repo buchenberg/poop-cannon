@@ -590,7 +590,7 @@ const injectCanvas = async (page, opts = {}, createName = 'poop.create') => {
 
     document.body.appendChild(canvas);
 
-    window.myConfetti = ${createName}(canvas, {
+    window.myPoop = ${createName}(canvas, {
       resize: ${!!allowResize},
       useWorker: ${!!useWorker}
     });
@@ -613,7 +613,7 @@ test('can create instances of poop in separate canvas', async t => {
 
   t.context.buffer = await poopImage(page, {
     colors: ['#ff0000']
-  }, 'myConfetti');
+  }, 'myPoop');
   t.context.image = await reduceImg(t.context.buffer);
 
   const afterSize = await getCanvasSize(page);
@@ -633,7 +633,7 @@ test('can use a custom canvas without resizing', async t => {
     startVelocity: 2,
     spread: 360,
     origin: { y: 0 }
-  }, 'myConfetti');
+  }, 'myPoop');
   t.context.image = await reduceImg(t.context.buffer);
 
   const afterSize = await getCanvasSize(page);
@@ -666,19 +666,19 @@ const resizeTest = async (t, createOpts, createName = 'poop.create') => {
 
     document.body.appendChild(canvas);
 
-    var myConfetti = ${createName}(canvas, ${JSON.stringify(createOpts)});
+    var myPoop = ${createName}(canvas, ${JSON.stringify(createOpts)});
 
     var opts = ${JSON.stringify(fireOpts)};
     var end = Date.now() + (10 * 1000);
 
-    var promise = myConfetti(opts);
+    var promise = myPoop(opts);
 
     var interval = setInterval(function() {
       if (Date.now() > end) {
         return clearInterval(interval);
       }
 
-      myConfetti(opts);
+      myPoop(opts);
     }, ${time});
   `);
 
@@ -725,7 +725,7 @@ test('can use a custom canvas with workers and resize it', async t => {
 
   t.context.buffer = await poopImage(page, {
     colors: ['#ff0000']
-  }, 'myConfetti');
+  }, 'myPoop');
   t.context.image = await reduceImg(t.context.buffer);
 
   const afterSize = await getCanvasSize(page);
@@ -762,7 +762,7 @@ test('shoots poop repeatedly in defaut and custom canvas using requestAnimationF
 
     (function frame() {
       poop(regular);
-      myConfetti(custom);
+      myPoop(custom);
 
       if (Date.now() < end) {
         requestAnimationFrame(frame);
@@ -887,17 +887,17 @@ test('calling `reset` method clears all existing poop but more can be launched a
   const page = t.context.page = await fixturePage();
   await injectCanvas(page);
 
-  const prom1 = page.evaluate(poop({ colors: ['#ff0000'] }, true, 'myConfetti'));
+  const prom1 = page.evaluate(poop({ colors: ['#ff0000'] }, true, 'myPoop'));
   await sleep(50);
   const img1 = await page.screenshot({ type: 'png' });
 
   await Promise.all([
     prom1,
-    page.evaluate(`myConfetti.reset();`)
+    page.evaluate(`myPoop.reset();`)
   ]);
   const img2 = await page.screenshot({ type: 'png' });
 
-  const prom2 = page.evaluate(poop({ colors: ['#ff0000'] }, true, 'myConfetti'));
+  const prom2 = page.evaluate(poop({ colors: ['#ff0000'] }, true, 'myPoop'));
   await sleep(50);
   const img3 = await page.screenshot({ type: 'png' });
 
@@ -981,7 +981,7 @@ test('the esm module exposed poop.create as create', async t => {
 
   t.context.buffer = await poopImage(page, {
     colors: ['#ff00ff']
-  }, 'myConfetti');
+  }, 'myPoop');
   t.context.image = await reduceImg(t.context.buffer);
 
   const pixels = await uniqueColors(t.context.image);
